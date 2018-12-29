@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.app {
+  background: #eee;
+  width: 50%;
+  height: 50%;
+  max-width: 400px;
+  max-height: 300px;
+  margin: auto;
+  position: relative;
+}
+.app__drag_box {
+  background: pink;
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  cursor: move;
+  text-align: center;
+  user-select: none;
+}
+.app__drag_el {
+  background-color: #2196f3;
+  padding: 10px;
+  color: #fff;
+}

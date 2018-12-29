@@ -16,10 +16,14 @@ const DraggableEl = (function () {
      * @param {Element} [options.mouseMoveTarget=document]
      * @param {Element} [options.mouseUpTarget=document]
      * @param {Element} [options.mouseLeaveTarget=document]  mouseLeaveTarget===mouseUpTarget is a better choice
-     * @param {Function} [options.mouseDownCb=function(event) {}]
-     * @param {Function} [options.mouseMoveCb=function(event) {}]
-     * @param {Function} [options.mouseUpCb=function(event) {}]
-     * @param {Function} [options.mouseLeaveCb=function(event) {}]
+     * @param {Function} [options.mouseDownStartCb=function(event) {}]
+     * @param {Function} [options.mouseDownEndCb=function(event) {}]
+     * @param {Function} [options.mouseMoveStartCb=function(event) {}]
+     * @param {Function} [options.mouseMoveEndCb=function(event) {}]
+     * @param {Function} [options.mouseUpStartCb=function(event) {}]
+     * @param {Function} [options.mouseUpEndCb=function(event) {}]
+     * @param {Function} [options.mouseLeaveStartCb=function(event) {}]
+     * @param {Function} [options.mouseLeaveEndCb=function(event) {}]
      * @param {Element|Rect} [options.containerRect=options.dragEl.parentNode] dragEl will always stay in this area
      * @param {Boolean} [options.isLeftTop=false] use absolute position or translate
      * @param {Boolean} [options.isMouseLeaveOn=false] whether to listen mouseleave event
@@ -30,10 +34,14 @@ const DraggableEl = (function () {
       mouseMoveTarget = document,
       mouseUpTarget = document,
       mouseLeaveTarget = document,
-      mouseDownCb = function () {},
-      mouseMoveCb = function () {},
-      mouseUpCb = function () {},
-      mouseLeaveCb = function () {},
+      mouseDownStartCb = function () {},
+      mouseDownEndCb = function () {},
+      mouseMoveStartCb = function () {},
+      mouseMoveEndCb = function () {},
+      mouseUpStartCb = function () {},
+      mouseUpEndCb = function () {},
+      mouseLeaveStartCb = function () {},
+      mouseLeaveEndCb = function () {},
       containerRect = dragEl.parentNode,
       isLeftTop = false,
       isMouseLeaveOn = false
@@ -49,10 +57,14 @@ const DraggableEl = (function () {
         isMouseLeaveOn
       })
       this.callback = {
-        mouseDownCb,
-        mouseMoveCb,
-        mouseUpCb,
-        mouseLeaveCb
+        mouseDownStartCb,
+        mouseDownEndCb,
+        mouseMoveStartCb,
+        mouseMoveEndCb,
+        mouseUpStartCb,
+        mouseUpEndCb,
+        mouseLeaveStartCb,
+        mouseLeaveEndCb
       }
       this.mouseDownCbBind = this.mouseDownCb.bind(this)
       this.mouseMoveCbBind = this.mouseMoveCb.bind(this)
@@ -68,6 +80,7 @@ const DraggableEl = (function () {
      * @param {Event} event
      */
     mouseDownCb (event) {
+      this.callback.mouseDownStartCb.call(this, event)
       // ensure the click is triggered by left click
       if (event.button !== 0) {
         return
@@ -79,10 +92,11 @@ const DraggableEl = (function () {
       if (this.isMouseLeaveOn) {
         this.mouseLeaveTarget.addEventListener('mouseleave', this.mouseUpCbBind)
       }
-      this.callback.mouseDownCb(event)
+      this.callback.mouseDownEndCb.call(this, event)
     }
     // mousemove logic, such as record the current point
     mouseMoveCb (event) {
+      this.callback.mouseMoveStartCb.call(this, event)
       // avoid unnecessary calculation
       if (this.hasRendered === false) {
         return
@@ -90,7 +104,7 @@ const DraggableEl = (function () {
       requestAnimationFrame(() => {
         this.mouseMoveCalc(event)
         this.hasRendered = true
-        this.callback.mouseMoveCb(event)
+        this.callback.mouseMoveEndCb.call(this, event)
       })
       this.hasRendered = false
     }
@@ -185,6 +199,7 @@ const DraggableEl = (function () {
      * @param {Event} event
      */
     mouseUpCb (event) {
+      this.callback.mouseUpStartCb.call(this, event)
       this.mouseMoveTarget.removeEventListener(
         'mousemove',
         this.mouseMoveCbBind
@@ -196,7 +211,7 @@ const DraggableEl = (function () {
           this.mouseUpCbBind
         )
       }
-      this.callback.mouseUpCb(event)
+      this.callback.mouseUpEndCb.call(this, event)
     }
     /**
      * @description remove mousedown listener

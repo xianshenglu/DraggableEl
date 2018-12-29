@@ -244,22 +244,5 @@ const DraggableEl = (function () {
 })()
 
 DraggableEl.instances = []
-// draggableEl config
-let appRect = app.getBoundingClientRect()
-new DraggableEl({
-  dragButton: app__drag_el,
-  dragEl: app__drag_box,
-  mouseMoveTarget: document,
-  mouseUpTarget: document,
-  mouseLeaveTarget: document,
-  containerRect: {
-    left: appRect.left - 100,
-    right: appRect.right + 100,
-    top: appRect.top - 100,
-    bottom: appRect.bottom + 100
-  },
-  isLeftTop: true,
-  isMouseLeaveOn: false
-})
 
 // export default DraggableEl

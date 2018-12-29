@@ -1,0 +1,27 @@
+{
+  "name": "draggable-el",
+  "version": "1.0.0",
+  "description": "a lib to make element draggable",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xianshenglu/draggableEl.git"
+  },
+  "keywords": [
+    "draggable",
+    "element"
+  ],
+  "author": "'xianshenglu' <'xianshenglu@foxmail.com'>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xianshenglu/draggableEl/issues"
+  },
+  "homepage": "https://github.com/xianshenglu/draggableEl#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.11.1"
+  }
+}

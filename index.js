@@ -12,9 +12,9 @@ const DraggableEl = (function () {
      * @description initialize instance, integrate options with default options
      * @param {Object} options
      * @param {Element} options.dragButton
-     * @param {Element} [options.dragEl=dragButton]
-     * @param {Element} [options.mouseMoveTarget=document]
-     * @param {Element} [options.mouseUpTarget=document]
+     * @param {Element} [options.dragEl=dragButton] element which we change the left/top or translate
+     * @param {Element} [options.mouseMoveTarget=document] element which we will bind mousemove on
+     * @param {Element} [options.mouseUpTarget=document] element which we will bind mouseup on
      * @param {Element} [options.mouseLeaveTarget=document]  mouseLeaveTarget===mouseUpTarget is a better choice
      * @param {Function} [options.mouseDownStartCb=function(event) {}]
      * @param {Function} [options.mouseDownEndCb=function(event) {}]
@@ -25,7 +25,7 @@ const DraggableEl = (function () {
      * @param {Function} [options.mouseLeaveStartCb=function(event) {}]
      * @param {Function} [options.mouseLeaveEndCb=function(event) {}]
      * @param {Element|Rect} [options.containerRect=options.dragEl.parentNode] dragEl will always stay in this area
-     * @param {Boolean} [options.isLeftTop=false] use absolute position or translate
+     * @param {Boolean} [options.isLeftTop=false] use absolute left/top or transform:translate()
      * @param {Boolean} [options.isMouseLeaveOn=false] whether to listen mouseleave event
      */
     constructor ({

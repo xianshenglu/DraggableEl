@@ -16,23 +16,20 @@
     </div>
     <script src="../../dist/DraggableEl.min.js"></script>
     <script>
-      // draggableEl config
-      let appRect = app.getBoundingClientRect()
-      new DraggableEl({
+      let appRect = document.querySelector('#app').getBoundingClientRect()
+      let app__drag_el = document.querySelector('#app__drag_el')
+      let app__drag_box = document.querySelector('#app__drag_box')
+      let config = {
         dragButton: app__drag_el,
         dragEl: app__drag_box,
-        mouseMoveTarget: document,
-        mouseUpTarget: document,
-        mouseLeaveTarget: document,
         containerRect: {
           left: appRect.left - 100,
           right: appRect.right + 100,
           top: appRect.top - 100,
           bottom: appRect.bottom + 100
-        },
-        isLeftTop: true,
-        isMouseLeaveOn: false
-      })
+        }
+      }
+      new DraggableEl(config)
     </script>
   </body>
 </html>

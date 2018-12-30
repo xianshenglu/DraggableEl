@@ -24,7 +24,6 @@ body {
   width: 50%;
   height: 50%;
   position: absolute;
-  cursor: move;
   text-align: center;
   user-select: none;
 }
@@ -32,4 +31,5 @@ body {
   background-color: #2196f3;
   padding: 10px;
   color: #fff;
+  cursor: move;
 }

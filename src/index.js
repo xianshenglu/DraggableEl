@@ -258,6 +258,4 @@ const DraggableEl = (function () {
   }
 })()
 
-DraggableEl.instances = []
-
-// export default DraggableEl
+module.exports = DraggableEl

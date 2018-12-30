@@ -1,6 +1,10 @@
 # DraggableEl
 
+![npm](https://img.shields.io/npm/v/draggable-el.svg) ![dependencies](https://img.shields.io/badge/dependencies-No%20dependency-brightgreen.svg) ![license](https://img.shields.io/badge/license-MIT-blue.svg)
+
 ### Usage
+
+#### [demo](https://xianshenglu.github.io/DraggableEl/examples/index/index.html)
 
 #### use in browser
 
@@ -8,17 +12,17 @@
 <script src=""></script>
 ```
 
-##### use by npm
+#### use by npm
 
 ```bash
-npm i --save DraggableEl
+npm i --save draggable-el
 ```
 
 ```js
 let DraggableEl = require('draggable-el')
 ```
 
-##### initialize/destroy instance
+#### initialize/destroy instance
 
 - initialize instance
 
@@ -50,7 +54,7 @@ instance1.destroyAll()
 
 ### TODO
 
-- [ ] support npm
-- [ ] support browser DraggableEl.min.js
+- [x] support npm
+- [x] support browser
 - [ ] support mobile touch behavior
 - [ ] add readme config

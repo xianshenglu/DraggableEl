@@ -9,7 +9,7 @@
 #### use in browser
 
 ```html
-<script src=""></script>
+<script src="https://xianshenglu.github.io/DraggableEl/dist/DraggableEl.min.js"></script>
 ```
 
 #### use by npm
@@ -27,11 +27,9 @@ let DraggableEl = require('draggable-el')
 - initialize instance
 
 ```js
-// draggableEl config
-let appRect = app.getBoundingClientRect()
 let config = {
-  dragButton: app__drag_el,
-  dragEl: app__drag_box
+  dragButton: document.getElementById('app__drag_el'),
+  dragEl: document.getElementById('app__drag_bo')x
 }
 let instance1 = new DraggableEl(config)
 ```

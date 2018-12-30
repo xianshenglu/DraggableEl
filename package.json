@@ -4,7 +4,8 @@
   "description": "a lib to make element draggable",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,10 @@
   "homepage": "https://github.com/xianshenglu/draggableEl#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.11.1"
+    "clean-webpack-plugin": "^1.0.0",
+    "eslint": "^5.11.1",
+    "expose-loader": "^0.7.5",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.1.2"
   }
 }

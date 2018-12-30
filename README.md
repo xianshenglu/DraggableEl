@@ -50,7 +50,7 @@ instance1.destroyAll()
 
 ### TODO
 
-- [ ] support mobile touch behavior
 - [ ] support npm
 - [ ] support browser DraggableEl.min.js
-- [ ] add config
+- [ ] support mobile touch behavior
+- [ ] add readme config

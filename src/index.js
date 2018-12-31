@@ -1,9 +1,27 @@
 // Rematrix, import for calc transform
 let Rematrix = require('rematrix')
-
 /**
  * @classdesc make elements draggable in a rect
  * @class DraggableEl
+ * @constructor
+ * @description initialize instance
+ * @param {Object} config
+ * @param {Element} config.dragButton element used to drag
+ * @param {Element} [config.dragEl=dragButton] element which we change the left/top or translate
+ * @param {Element} [config.mouseMoveTarget=document] element which we will bind mousemove on
+ * @param {Element} [config.mouseUpTarget=document] element which we will bind mouseup on
+ * @param {Element} [config.mouseLeaveTarget=document]  element which we will bind mouseleave on
+ * @param {Function} [config.mouseDownStartCb=function(event) {}] callback, earliest executed when mousedown event is triggered
+ * @param {Function} [config.mouseDownEndCb=function(event) {}] callback, latest executed when mousedown event is triggered
+ * @param {Function} [config.mouseMoveStartCb=function(event) {}] as above
+ * @param {Function} [config.mouseMoveEndCb=function(event) {}] as above
+ * @param {Function} [config.mouseUpStartCb=function(event) {}] as above
+ * @param {Function} [config.mouseUpEndCb=function(event) {}] as above
+ * @param {Function} [config.mouseLeaveStartCb=function(event) {}] as above
+ * @param {Function} [config.mouseLeaveEndCb=function(event) {}] as above
+ * @param {Element|Rect} [config.containerRect=config.dragEl.parentNode] dragEl will always stay in this area
+ * @param {Boolean} [config.isLeftTop=false] use absolute left/top or transform:translate()
+ * @param {Boolean} [config.isMouseLeaveOn=false] whether to listen mouseleave event
  */
 const DraggableEl = (function () {
   //todo can be re-written by static private properties, at that moment we can delete IIFE
@@ -11,26 +29,6 @@ const DraggableEl = (function () {
   const instances = []
 
   return class {
-    /**
-     * @description initialize instance, integrate options with default options
-     * @param {Object} options
-     * @param {Element} options.dragButton
-     * @param {Element} [options.dragEl=dragButton] element which we change the left/top or translate
-     * @param {Element} [options.mouseMoveTarget=document] element which we will bind mousemove on
-     * @param {Element} [options.mouseUpTarget=document] element which we will bind mouseup on
-     * @param {Element} [options.mouseLeaveTarget=document]  mouseLeaveTarget===mouseUpTarget is a better choice
-     * @param {Function} [options.mouseDownStartCb=function(event) {}]
-     * @param {Function} [options.mouseDownEndCb=function(event) {}]
-     * @param {Function} [options.mouseMoveStartCb=function(event) {}]
-     * @param {Function} [options.mouseMoveEndCb=function(event) {}]
-     * @param {Function} [options.mouseUpStartCb=function(event) {}]
-     * @param {Function} [options.mouseUpEndCb=function(event) {}]
-     * @param {Function} [options.mouseLeaveStartCb=function(event) {}]
-     * @param {Function} [options.mouseLeaveEndCb=function(event) {}]
-     * @param {Element|Rect} [options.containerRect=options.dragEl.parentNode] dragEl will always stay in this area
-     * @param {Boolean} [options.isLeftTop=false] use absolute left/top or transform:translate()
-     * @param {Boolean} [options.isMouseLeaveOn=false] whether to listen mouseleave event
-     */
     constructor ({
       dragButton,
       dragEl = dragButton,

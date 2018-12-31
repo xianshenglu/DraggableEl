@@ -19,7 +19,7 @@ let Rematrix = require('rematrix')
  * @param {Function} [config.mouseUpEndCb=function(event) {}] as above
  * @param {Function} [config.mouseLeaveStartCb=function(event) {}] as above
  * @param {Function} [config.mouseLeaveEndCb=function(event) {}] as above
- * @param {Element|Rect} [config.containerRect=config.dragEl.parentNode] dragEl will always stay in this area
+ * @param {Element|Rect} [config.containerRect=config.dragEl.parentNode] dragEl will always stay in this area, Rect is like [DOMRect](https://developer.mozilla.org/en-US/docs/Web/API/DOMRect) which must has `{left:Number,top:Number,right:Number,bottom:Number}` properties.
  * @param {Boolean} [config.isLeftTop=false] use absolute left/top or transform:translate()
  * @param {Boolean} [config.isMouseLeaveOn=false] whether to listen mouseleave event
  */

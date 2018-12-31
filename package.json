@@ -1,6 +1,10 @@
 {
   "name": "draggable-el",
+<<<<<<< HEAD
   "version": "1.0.5",
+=======
+  "version": "1.0.4",
+>>>>>>> dev
   "description": "a lib to make element draggable",
   "main": "src/index.js",
   "scripts": {

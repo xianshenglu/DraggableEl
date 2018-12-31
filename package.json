@@ -32,5 +32,8 @@
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.14"
+  },
+  "dependencies": {
+    "rematrix": "^0.3.0"
   }
 }

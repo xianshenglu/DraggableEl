@@ -1,3 +1,6 @@
+// Rematrix, import for calc transform
+let Rematrix = require('rematrix')
+
 /**
  * @classdesc make elements draggable in a rect
  * @class DraggableEl
@@ -129,19 +132,23 @@ const DraggableEl = (function () {
         typeof this.containerRect.getBoundingClientRect === 'function'
           ? this.containerRect.getBoundingClientRect()
           : this.containerRect
-      let isLeftOverflow = curRect.left + offset.x < containerRect.left
-      let isRightOverflow = curRect.right + offset.x > containerRect.right
-      let isTopOverflow = curRect.top + offset.y < containerRect.top
-      let isBottomOverflow = curRect.bottom + offset.y > containerRect.bottom
+      let spaceLeft = ['left', 'right', 'top', 'bottom'].reduce((re, key) => {
+        re[key] = containerRect[key] - curRect[key]
+        return re
+      }, {})
+      let isLeftOverflow = offset.x < spaceLeft.left
+      let isRightOverflow = offset.x > spaceLeft.right
+      let isTopOverflow = offset.y < spaceLeft.top
+      let isBottomOverflow = offset.y > spaceLeft.bottom
       if (isLeftOverflow) {
-        offset.x = containerRect.left - curRect.left
+        offset.x = spaceLeft.left
       } else if (isRightOverflow) {
-        offset.x = containerRect.right - curRect.right
+        offset.x = spaceLeft.right
       }
       if (isTopOverflow) {
-        offset.y = containerRect.top - curRect.top
+        offset.y = spaceLeft.top
       } else if (isBottomOverflow) {
-        offset.y = containerRect.bottom - curRect.bottom
+        offset.y = spaceLeft.bottom
       }
       return offset
     }
@@ -185,11 +192,11 @@ const DraggableEl = (function () {
      * @returns {{x:Number,y:Number}} the current offset
      */
     setCurTransform (style, offset) {
-      let matrix = style.getPropertyValue('transform').match(/-?\d+/g)
-      let [translateX, translateY] = matrix !== null ? matrix.slice(-2) : [0, 0]
-      translateX = Number(translateX) + Number(offset.x)
-      translateY = Number(translateY) + Number(offset.y)
-      this.dragEl.style.transform = `translate(${translateX}px,${translateY}px)`
+      let transform = Rematrix.parse(style.getPropertyValue('transform'))
+      let translateX = Rematrix.translateX(offset.x)
+      let translateY = Rematrix.translateY(offset.y)
+      let result = [transform, translateX, translateY].reduce(Rematrix.multiply)
+      this.dragEl.style.transform = Rematrix.toString(result)
       return { x: translateX, y: translateY }
     }
     /**

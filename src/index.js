@@ -27,7 +27,7 @@ const DraggableEl = (function () {
   //todo can be re-written by static private properties, at that moment we can delete IIFE
   let count = 0
   const instances = []
-
+  let isMobile = false
   return class {
     constructor ({
       dragButton,
@@ -71,6 +71,7 @@ const DraggableEl = (function () {
       this.mouseMoveCbBind = this.mouseMoveCb.bind(this)
       this.mouseUpCbBind = this.mouseUpCb.bind(this)
       this.dragButton.addEventListener('mousedown', this.mouseDownCbBind)
+      this.dragButton.addEventListener('touchstart', this.mouseDownCbBind)
       this.warnIllegalMouseLeave()
       this.id = count++
       instances.push(this)
@@ -81,23 +82,31 @@ const DraggableEl = (function () {
      * @param {Event} event
      */
     mouseDownCb (event) {
+      isMobile = event.type === 'touchstart'
       this.callback.mouseDownStartCb.call(this, event)
-      // ensure the click is triggered by left click
-      if (event.button !== 0) {
-        return
-      }
       this.hasRendered = true
       this.prevMouseMoveEvent = event
-      this.mouseMoveTarget.addEventListener('mousemove', this.mouseMoveCbBind)
-      this.mouseUpTarget.addEventListener('mouseup', this.mouseUpCbBind)
-      if (this.isMouseLeaveOn) {
-        this.mouseLeaveTarget.addEventListener('mouseleave', this.mouseUpCbBind)
+      if (isMobile === true) {
+        this.mouseMoveTarget.addEventListener('touchmove', this.mouseMoveCbBind)
+        this.mouseUpTarget.addEventListener('touchend', this.mouseUpCbBind)
+      } else {
+        this.mouseMoveTarget.addEventListener('mousemove', this.mouseMoveCbBind)
+        this.mouseUpTarget.addEventListener('mouseup', this.mouseUpCbBind)
+        if (this.isMouseLeaveOn) {
+          this.mouseLeaveTarget.addEventListener(
+            'mouseleave',
+            this.mouseUpCbBind
+          )
+        }
       }
       this.callback.mouseDownEndCb.call(this, event)
     }
     // mousemove logic, such as record the current point
     mouseMoveCb (event) {
       this.callback.mouseMoveStartCb.call(this, event)
+      if (isMobile === true) {
+        event.preventDefault()
+      }
       // avoid unnecessary calculation
       if (this.hasRendered === false) {
         return
@@ -114,6 +123,16 @@ const DraggableEl = (function () {
       let offset = {
         x: event.clientX - this.prevMouseMoveEvent.clientX,
         y: event.clientY - this.prevMouseMoveEvent.clientY
+      }
+      if (isMobile === true) {
+        offset = {
+          x:
+            event.touches[0].clientX -
+            this.prevMouseMoveEvent.touches[0].clientX,
+          y:
+            event.touches[0].clientY -
+            this.prevMouseMoveEvent.touches[0].clientY
+        }
       }
       let targetOffset = this.correctOffsetInContainer(offset)
       this.setCurPos(targetOffset)
@@ -203,17 +222,27 @@ const DraggableEl = (function () {
      */
     mouseUpCb (event) {
       this.callback.mouseUpStartCb.call(this, event)
-      this.mouseMoveTarget.removeEventListener(
-        'mousemove',
-        this.mouseMoveCbBind
-      )
-      this.mouseUpTarget.removeEventListener('mouseup', this.mouseUpCbBind)
-      if (this.isMouseLeaveOn) {
-        this.mouseLeaveTarget.removeEventListener(
-          'mouseleave',
-          this.mouseUpCbBind
+
+      if (isMobile) {
+        this.mouseMoveTarget.removeEventListener(
+          'touchmove',
+          this.mouseMoveCbBind
         )
+        this.mouseUpTarget.removeEventListener('touchend', this.mouseUpCbBind)
+      } else {
+        this.mouseMoveTarget.removeEventListener(
+          'mousemove',
+          this.mouseMoveCbBind
+        )
+        this.mouseUpTarget.removeEventListener('mouseup', this.mouseUpCbBind)
+        if (this.isMouseLeaveOn) {
+          this.mouseLeaveTarget.removeEventListener(
+            'mouseleave',
+            this.mouseUpCbBind
+          )
+        }
       }
+
       this.callback.mouseUpEndCb.call(this, event)
     }
     /**
@@ -221,7 +250,11 @@ const DraggableEl = (function () {
      * @returns {Boolean} if destroy successfully return true. Otherwise return false
      */
     destroy () {
-      this.dragButton.removeEventListener('mousedown', this.mouseDownCbBind)
+      if (isMobile) {
+        this.dragButton.removeEventListener('touchstart', this.mouseDownCbBind)
+      } else {
+        this.dragButton.removeEventListener('mousedown', this.mouseDownCbBind)
+      }
       let instanceIndex = instances.findIndex(obj => obj.id === this.id)
       if (instanceIndex >= 0) {
         return !!instances.splice(instanceIndex, 1)

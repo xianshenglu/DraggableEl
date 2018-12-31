@@ -2,24 +2,32 @@
 
 ![npm](https://img.shields.io/npm/v/draggable-el.svg) ![dependencies](https://img.shields.io/badge/dependencies-No%20dependency-brightgreen.svg) ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
+### Browser Support
+
+This lib uses [transform-function](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function#Browser_compatibility), [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame). Their compatibilities is:
+
+**Chrome, Firefox, Safari, Edge12, IE10**
+
 ### Usage
 
 #### [demo](https://xianshenglu.github.io/DraggableEl/examples/index/index.html)
 
-#### use in browser
-
-```html
-<script src="https://xianshenglu.github.io/DraggableEl/dist/DraggableEl.min.js"></script>
-```
-
-#### use by npm
+#### download package
 
 ```bash
 npm i --save draggable-el
 ```
 
+#### import with `require` or `<script>`
+
 ```js
 let DraggableEl = require('draggable-el')
+```
+
+or
+
+```html
+<script src="./node_modules/draggable-el/dist/DraggableEl.min.js"></script>
 ```
 
 #### initialize/destroy instance
@@ -48,7 +56,16 @@ instance1.destroy()
 instance1.destroyAll()
 ```
 
-### Config
+### [Config](./src/index.js)
+
+### Warning
+
+- If `rotate` is in your `transform` or default mode is not good, set `isLeftTop:true` in your config.
+
+### Other Shiny Libs
+
+- [interact.js](https://github.com/taye/interact.js)
+- [plain-draggable](https://github.com/anseki/plain-draggable)
 
 ### TODO
 
@@ -56,3 +73,4 @@ instance1.destroyAll()
 - [x] support browser
 - [ ] support mobile touch behavior
 - [ ] add readme config
+- [x] avoid overwrite transform other values

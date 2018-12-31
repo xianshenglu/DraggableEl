@@ -11,14 +11,14 @@ let Rematrix = require('rematrix')
  * @param {Element} [config.mouseMoveTarget=document] element which we will bind mousemove on
  * @param {Element} [config.mouseUpTarget=document] element which we will bind mouseup on
  * @param {Element} [config.mouseLeaveTarget=document]  element which we will bind mouseleave on
- * @param {Function} [config.mouseDownStartCb=function(event) {}] callback, earliest executed when mousedown event is triggered
+ * @param {Function} [config.mouseDownStartCb=function(event) {}] callback, earliest executed when mousedown event is triggered, **you can return false in the callback, then we will stop**
  * @param {Function} [config.mouseDownEndCb=function(event) {}] callback, latest executed when mousedown event is triggered
- * @param {Function} [config.mouseMoveStartCb=function(event) {}] as above
- * @param {Function} [config.mouseMoveEndCb=function(event) {}] as above
- * @param {Function} [config.mouseUpStartCb=function(event) {}] as above
- * @param {Function} [config.mouseUpEndCb=function(event) {}] as above
- * @param {Function} [config.mouseLeaveStartCb=function(event) {}] as above
- * @param {Function} [config.mouseLeaveEndCb=function(event) {}] as above
+ * @param {Function} [config.mouseMoveStartCb=function(event) {}] callback, earliest executed when mousedown event is triggered, **you can return false in the callback, then we will stop**
+ * @param {Function} [config.mouseMoveEndCb=function(event) {}] as above end callback
+ * @param {Function} [config.mouseUpStartCb=function(event) {}] callback, earliest executed when mouseup event is triggered
+ * @param {Function} [config.mouseUpEndCb=function(event) {}] as above end callback
+ * @param {Function} [config.mouseLeaveStartCb=function(event) {}] callback, earliest executed when mouseleave event is triggered
+ * @param {Function} [config.mouseLeaveEndCb=function(event) {}] as above end callback
  * @param {Element|Rect} [config.containerRect=config.dragEl.parentNode] dragEl will always stay in this area, Rect is like [DOMRect](https://developer.mozilla.org/en-US/docs/Web/API/DOMRect) which must has `{left:Number,top:Number,right:Number,bottom:Number}` properties.
  * @param {Boolean} [config.isLeftTop=false] use absolute left/top or transform:translate()
  * @param {Boolean} [config.isMouseLeaveOn=false] whether to listen mouseleave event
@@ -83,7 +83,10 @@ const DraggableEl = (function () {
      */
     mouseDownCb (event) {
       isMobile = event.type === 'touchstart'
-      this.callback.mouseDownStartCb.call(this, event)
+      let isCancelled = this.callback.mouseDownStartCb.call(this, event)
+      if (isCancelled === false) {
+        return
+      }
       this.hasRendered = true
       this.prevMouseMoveEvent = event
       if (isMobile === true) {
@@ -103,7 +106,10 @@ const DraggableEl = (function () {
     }
     // mousemove logic, such as record the current point
     mouseMoveCb (event) {
-      this.callback.mouseMoveStartCb.call(this, event)
+      let isCancelled = this.callback.mouseMoveStartCb.call(this, event)
+      if (isCancelled === false) {
+        return
+      }
       if (isMobile === true) {
         event.preventDefault()
       }

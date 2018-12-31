@@ -1,16 +1,12 @@
 {
   "name": "draggable-el",
-<<<<<<< HEAD
   "version": "1.0.5",
-=======
-  "version": "1.0.4",
->>>>>>> dev
   "description": "a lib to make element draggable",
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
     "build": "webpack --config build/webpack.prod.js",
-    "dev": " webpack-dev-server --open  --config build/webpack.prod.js"
+    "dev": " webpack-dev-server --open --host 192.168.1.3  --config build/webpack.prod.js"
   },
   "repository": {
     "type": "git",

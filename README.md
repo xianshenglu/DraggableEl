@@ -72,6 +72,6 @@ instance1.destroyAll()
 - [x] support npm
 - [x] support browser
 - [ ] add tests
-- [ ] support mobile touch behavior
+- [x] support mobile touch behavior
 - [x] add readme config
 - [x] avoid overwrite transform other values

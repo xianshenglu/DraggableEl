@@ -5,11 +5,13 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --config build/webpack.prod.js",
+    "dev": " webpack-dev-server --open  --config build/webpack.prod.js",
+    "watch": "webpack --watch --config build/webpack.prod.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xianshenglu/draggableEl.git"
+    "url": "git+https://github.com/xianshenglu/DraggableEl.git"
   },
   "keywords": [
     "draggable",
@@ -18,15 +20,17 @@
   "author": "'xianshenglu' <'xianshenglu@foxmail.com'>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xianshenglu/draggableEl/issues"
+    "url": "https://github.com/xianshenglu/DraggableEl/issues"
   },
-  "homepage": "https://github.com/xianshenglu/draggableEl#readme",
+  "homepage": "https://github.com/xianshenglu/DraggableEl#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "clean-webpack-plugin": "^1.0.0",
     "eslint": "^5.11.1",
     "expose-loader": "^0.7.5",
+    "prettier": "^1.15.3",
     "webpack": "^4.28.3",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.14"
   }
 }

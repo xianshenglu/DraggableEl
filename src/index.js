@@ -103,8 +103,8 @@ const DraggableEl = (function () {
       }
       requestAnimationFrame(() => {
         this.mouseMoveCalc(event)
-        this.hasRendered = true
         this.callback.mouseMoveEndCb.call(this, event)
+        this.hasRendered = true
       })
       this.hasRendered = false
     }
@@ -121,9 +121,7 @@ const DraggableEl = (function () {
     }
     /**
      * @description correct theoretical offset by containerRect
-     * @param {Object} offset
-     * @param {Number} offset.x current event.clientX - previous event.clientX
-     * @param {Number} offset.y current event.clientY - previous event.clientY
+     * @param {{x:Number,y:Number}} offset current event.clientX/Y - previous event.clientX/Y
      */
     correctOffsetInContainer (offset) {
       let curRect = this.dragEl.getBoundingClientRect()
@@ -168,7 +166,7 @@ const DraggableEl = (function () {
      * @description set dragEl position by left,top
      * @param {CSSStyleDeclaration} style
      * @param {Object} offset
-     * @returns {Object}
+     * @returns {{x:Number,y:Number}} the current offset
      */
     setCurLeftTop (style, offset) {
       let left = style.getPropertyValue('left')
@@ -184,11 +182,11 @@ const DraggableEl = (function () {
      * @param {CSSStyleDeclaration} style
      * @param {Object} offset
      * @todo avoid overwriting scale and skew
-     * @returns {Object}
+     * @returns {{x:Number,y:Number}} the current offset
      */
     setCurTransform (style, offset) {
-      let matrix = style.getPropertyValue('transform').match(/\d+/g)
-      let [translateX, translateY] = matrix ? matrix.slice(-2) : [0, 0]
+      let matrix = style.getPropertyValue('transform').match(/-?\d+/g)
+      let [translateX, translateY] = matrix !== null ? matrix.slice(-2) : [0, 0]
       translateX = Number(translateX) + Number(offset.x)
       translateY = Number(translateY) + Number(offset.y)
       this.dragEl.style.transform = `translate(${translateX}px,${translateY}px)`

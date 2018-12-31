@@ -26,6 +26,7 @@ body {
   position: absolute;
   text-align: center;
   user-select: none;
+  transform: scale(0.8) translate(20px);
 }
 .app__drag_el {
   background-color: #2196f3;
